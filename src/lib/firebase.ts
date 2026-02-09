@@ -1,6 +1,6 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 
 // Firebase configuration - Meataholic Production
 const firebaseConfig = {
@@ -17,7 +17,7 @@ const app: FirebaseApp = initializeApp(firebaseConfig);
 
 // Export Firebase services
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 export const googleProvider = new GoogleAuthProvider();
 
 // Configuration check - always true since we have the config
