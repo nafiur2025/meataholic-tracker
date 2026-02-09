@@ -13,7 +13,9 @@ service cloud.firestore {
 
     // Expenses collection
     match /expenses/{expenseId} {
-      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow get: if isAuthenticated() && isOwner(resource.data.userId);
+      allow list: if isAuthenticated()
+        && request.query.where('userId', '==', request.auth.uid);
       allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
       allow update: if isAuthenticated() && isOwner(resource.data.userId);
       allow delete: if isAuthenticated() && isOwner(resource.data.userId);
@@ -21,7 +23,9 @@ service cloud.firestore {
 
     // Revenue collection
     match /revenue/{revenueId} {
-      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow get: if isAuthenticated() && isOwner(resource.data.userId);
+      allow list: if isAuthenticated()
+        && request.query.where('userId', '==', request.auth.uid);
       allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
       allow update: if isAuthenticated() && isOwner(resource.data.userId);
       allow delete: if isAuthenticated() && isOwner(resource.data.userId);
@@ -29,7 +33,9 @@ service cloud.firestore {
 
     // Stock collection
     match /stock/{stockId} {
-      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow get: if isAuthenticated() && isOwner(resource.data.userId);
+      allow list: if isAuthenticated()
+        && request.query.where('userId', '==', request.auth.uid);
       allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
       allow update: if isAuthenticated() && isOwner(resource.data.userId);
       allow delete: if isAuthenticated() && isOwner(resource.data.userId);
@@ -37,7 +43,9 @@ service cloud.firestore {
 
     // Consumables collection
     match /consumables/{consumableId} {
-      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow get: if isAuthenticated() && isOwner(resource.data.userId);
+      allow list: if isAuthenticated()
+        && request.query.where('userId', '==', request.auth.uid);
       allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
       allow update: if isAuthenticated() && isOwner(resource.data.userId);
       allow delete: if isAuthenticated() && isOwner(resource.data.userId);
