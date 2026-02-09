@@ -98,6 +98,9 @@ export function useFirestoreExpenses() {
       userId: currentUser.uid,
       createdAt: new Date().toISOString(),
     };
+    if (expenseData.notes === undefined) {
+      delete expenseData.notes;
+    }
 
     await addDoc(collection(db, 'expenses'), expenseData);
   }, [currentUser, db]);
@@ -115,6 +118,9 @@ export function useFirestoreExpenses() {
       userId: currentUser.uid,
       createdAt: new Date().toISOString(),
     };
+    if (revenueData.notes === undefined) {
+      delete revenueData.notes;
+    }
 
     await addDoc(collection(db, 'revenue'), revenueData);
   }, [currentUser, db]);
