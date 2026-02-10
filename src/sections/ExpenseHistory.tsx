@@ -52,6 +52,13 @@ const categoryColors: Record<ExpenseCategory, string> = {
   other: 'bg-slate-100 text-slate-700 border-slate-200',
 };
 
+
+const getEntryUserLabel = (entry: { userName?: string; userEmail?: string; userId: string }) => {
+  if (entry.userName?.trim()) return entry.userName;
+  if (entry.userEmail?.trim()) return entry.userEmail;
+  return `User ${entry.userId.slice(0, 6)}`;
+};
+
 export default function ExpenseHistory() {
   const { toast } = useToast();
   const { 
@@ -386,7 +393,7 @@ export default function ExpenseHistory() {
                                 <div>
                                   <p className="font-medium text-sm">{expense.item}</p>
                                   <p className="text-xs text-gray-500">
-                                    {expenseCategoryLabels[expense.category]} • {expense.quantity} {expense.unit}
+                                    {expenseCategoryLabels[expense.category]} • {expense.quantity} {expense.unit} • Entered by {getEntryUserLabel(expense)}
                                   </p>
                                   {expense.notes && (
                                     <p className="text-xs text-gray-400 mt-1">{expense.notes}</p>
@@ -456,6 +463,7 @@ export default function ExpenseHistory() {
                               </div>
                               <div>
                                 <p className="font-medium text-sm capitalize">{rev.source} Revenue</p>
+                                <p className="text-xs text-gray-500">Entered by {getEntryUserLabel(rev)}</p>
                                 {rev.notes && (
                                   <p className="text-xs text-gray-400 mt-1">{rev.notes}</p>
                                 )}

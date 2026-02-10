@@ -5,7 +5,6 @@ import {
   deleteDoc, 
   doc, 
   query, 
-  where, 
   onSnapshot, 
   orderBy
 } from 'firebase/firestore';
@@ -21,11 +20,15 @@ export interface RevenueEntry {
   source: 'online' | 'cash' | 'other';
   notes?: string;
   userId: string;
+  userName?: string;
+  userEmail?: string;
   createdAt: string;
 }
 
 export interface FirestoreExpense extends Expense {
   userId: string;
+  userName?: string;
+  userEmail?: string;
 }
 
 export function useFirestoreExpenses() {
@@ -51,7 +54,6 @@ export function useFirestoreExpenses() {
     // Subscribe to expenses
     const expensesQuery = query(
       collection(db, 'expenses'),
-      where('userId', '==', currentUser.uid),
       orderBy('createdAt', 'desc')
     );
 
@@ -70,7 +72,6 @@ export function useFirestoreExpenses() {
     // Subscribe to revenue
     const revenueQuery = query(
       collection(db, 'revenue'),
-      where('userId', '==', currentUser.uid),
       orderBy('createdAt', 'desc')
     );
 
@@ -96,6 +97,8 @@ export function useFirestoreExpenses() {
     const expenseData = {
       ...expense,
       userId: currentUser.uid,
+      userName: currentUser.displayName || undefined,
+      userEmail: currentUser.email || undefined,
       createdAt: new Date().toISOString(),
     };
     if (expenseData.notes === undefined) {
@@ -116,6 +119,8 @@ export function useFirestoreExpenses() {
     const revenueData = {
       ...rev,
       userId: currentUser.uid,
+      userName: currentUser.displayName || undefined,
+      userEmail: currentUser.email || undefined,
       createdAt: new Date().toISOString(),
     };
     if (revenueData.notes === undefined) {
