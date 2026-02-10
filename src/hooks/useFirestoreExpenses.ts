@@ -7,7 +7,6 @@ import {
   query, 
   onSnapshot, 
   orderBy,
-  where,
 } from 'firebase/firestore';
 import { db as firebaseDb } from '@/lib/firebase';
 import type { Firestore } from 'firebase/firestore';
@@ -55,7 +54,6 @@ export function useFirestoreExpenses() {
     // Subscribe to expenses
     const expensesQuery = query(
       collection(db, 'expenses'),
-      where('userId', '==', currentUser.uid),
       orderBy('createdAt', 'desc')
     );
 
@@ -74,7 +72,6 @@ export function useFirestoreExpenses() {
     // Subscribe to revenue
     const revenueQuery = query(
       collection(db, 'revenue'),
-      where('userId', '==', currentUser.uid),
       orderBy('createdAt', 'desc')
     );
 

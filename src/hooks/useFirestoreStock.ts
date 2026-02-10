@@ -5,7 +5,6 @@ import {
   deleteDoc, 
   doc, 
   query, 
-  where, 
   onSnapshot, 
   updateDoc,
   orderBy
@@ -46,7 +45,6 @@ export function useFirestoreStock() {
     // Subscribe to stock items
     const stockQuery = query(
       collection(db, 'stock'),
-      where('userId', '==', currentUser.uid),
       orderBy('name')
     );
 
@@ -65,7 +63,6 @@ export function useFirestoreStock() {
     // Subscribe to consumables
     const consumablesQuery = query(
       collection(db, 'consumables'),
-      where('userId', '==', currentUser.uid),
       orderBy('name')
     );
 
