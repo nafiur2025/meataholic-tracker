@@ -51,6 +51,13 @@ const categoryColors: Record<ExpenseCategory, string> = {
   other: 'bg-slate-100 text-slate-700 border-slate-200',
 };
 
+
+const getEntryUserLabel = (entry: { userName?: string; userEmail?: string; userId: string }) => {
+  if (entry.userName?.trim()) return entry.userName;
+  if (entry.userEmail?.trim()) return entry.userEmail;
+  return `User ${entry.userId.slice(0, 6)}`;
+};
+
 export default function CostEntry() {
   const { toast } = useToast();
   const { 
@@ -487,7 +494,7 @@ export default function CostEntry() {
                   <div>
                     <p className="font-medium text-sm">{expense.item}</p>
                     <p className="text-xs text-gray-500">
-                      {expenseCategoryLabels[expense.category]} • {expense.quantity} {expense.unit}
+                      {expenseCategoryLabels[expense.category]} • {expense.quantity} {expense.unit} • Entered by {getEntryUserLabel(expense)}
                     </p>
                   </div>
                 </div>
